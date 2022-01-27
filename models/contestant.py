@@ -1,13 +1,16 @@
-from db import db
+from db import getConnection
 
 class ContestantModel:
     @classmethod
     def find_by_id(cls, id):
+        db = getConnection()
         cursor = db.cursor(buffered=True)
         query = "SELECT id, name, surname, email, discord, schoolId, adult, epicId, csRank, maxCsRank, faceitLevel, maxFaceitLevel FROM contestants WHERE id = %s"
         values = (id,)
         cursor.execute(query, values)
         row = cursor.fetchone()
+        cursor.close()
+        db.close()
         if row:
             return cls({
                 'name': row[1],
@@ -26,23 +29,30 @@ class ContestantModel:
             return None
     @classmethod
     def find_id_by_email(cls, email):
+        db = getConnection()
         cursor = db.cursor(buffered=True)
         query = "SELECT id FROM contestants WHERE email = %s"
         values = (email,)
         cursor.execute(query, values)
         row = cursor.fetchone()
+        cursor.close()
+        db.close()
         if row:
             return row[0]
         else:
             return None
             
     def insert(self):
+        db = getConnection()
         cursor = db.cursor(buffered=True)
         query = "INSERT INTO contestants (name, surname, adult, email, discord, csRank, maxCsRank, faceitLevel, maxFaceitLevel, epicId, schoolId) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         values = (self.name, self.surname, self.adult, self.email, self.discord, self.csRank, self.maxCsRank, self.faceitLevel, self.maxFaceitLevel, self.epicId, self.schoolId)
         cursor.execute(query, values)
+        cursor.close()
+        db.close()
 
     def update(self, config):
+        db = getConnection()
         cursor = db.cursor(buffered=True)
         if 'epicId' in config:
             query = "UPDATE contestants SET epicId = %s WHERE email = %s"
@@ -64,6 +74,8 @@ class ContestantModel:
             query = "UPDATE contestants SET maxFaceitLevel = %s WHERE email = %s"
             values = (config['maxFaceitLevel'], self.email)
             cursor.execute(query, values)
+        cursor.close()
+        db.close()
 
     def __init__(self, config):
         self.name = config['name']

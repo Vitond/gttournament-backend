@@ -14,7 +14,7 @@ CONTESTANT_COUNTS = {
     'MINECRAFT': {'max': 4, 'min': 1},
     'ROCKET_LEAGUE': {'max': 2, 'min': 2},
     'COUNTER_STRIKE': {'max': 5,'min':5},
-    'LEAGUE_OF_LEGENDS': {'max':5, 'min':5}
+    'LOL': {'max':5, 'min':5}
 }
 
 MAXIMUM_RESERVISTS = 2

@@ -1,9 +1,12 @@
 from flask_restful import Resource
-from db import db
+from db import getConnection
 
 class Schools(Resource):
     def get(self):
-        cursor = db.cursor()
+        db = getConnection()
+        cursor = db.cursor(buffered=True)
         cursor.execute("SELECT id, name from schools")
         schools = cursor.fetchall()
+        cursor.close()
+        db.close()
         return {"schools": schools}

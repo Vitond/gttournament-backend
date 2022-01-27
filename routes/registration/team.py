@@ -6,7 +6,6 @@ from flask_restful import Resource
 from models.contestant import ContestantModel
 from models.registration import RegistrationModel
 from constants import MAXIMUM_RESERVISTS, CONTESTANT_COUNTS
-from db import db
 
 class TeamRegistration(Resource):
     def post(self):
@@ -68,16 +67,18 @@ class TeamRegistration(Resource):
         contestant_counts = CONTESTANT_COUNTS[data['game']]
         contestant_count = len(data['contestants']) - reservist_count
         if contestant_count > contestant_counts['max']:
-            return "Byl přesažen maximální počet účastníků"
+            return "Byl přesažen maximální počet účastníků", 400
         if contestant_count < contestant_counts['min']:
-            return "Není dosažen minimální počet účastníků"
+            return "Není dosažen minimální počet účastníků", 400
         
         contestant_id_list = []
+        registered_contestant_list = []
         unregistered_contestant_list = []        
         for contestant in data['contestants']:
             id = ContestantModel.find_id_by_email(contestant['email'])
             if id:
                 contestant_id_list.append(id)
+                registered_contestant_list.append(contestant)
             else:
                 contestant_id_list.append(contestant['email'])
                 unregistered_contestant_list.append(contestant)
@@ -107,15 +108,18 @@ class TeamRegistration(Resource):
         team_id = TeamModel.find_id_by_name(data['name'])
         for contestant_config in data['contestants']:
             contestant_id = ContestantModel.find_id_by_email(contestant_config['email'])
+            contestant = ContestantModel.find_by_id(contestant_id)
             contestant.update(contestant_config)
             registration = RegistrationModel({
                 'teamId': team_id,
                 'game': data['game'],
                 'nickname': contestant_config['nickname'],
                 'contestantId': contestant_id,
-                'externist': contestant_config['externist']
+                'externist': contestant_config['externist'],
+                'role': contestant_config['role']
             })
             registration.insert()
+            
         return "", 200
 
         
