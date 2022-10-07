@@ -86,8 +86,8 @@ class ContestantModel:
         self.csRank = ''
         self.maxCsRank = ''
         self.epicId = ''
-        self.faceitLevel = ''
-        self.maxFaceitLevel = ''
+        self.faceitLevel = None
+        self.maxFaceitLevel = None
 
         if 'csRank' in config:
             self.csRank = config['csRank']
