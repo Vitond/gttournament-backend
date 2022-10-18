@@ -15,7 +15,7 @@ CONTESTANT_COUNTS = {
     'ROCKET_LEAGUE': {'max': 2, 'min': 2},
     'COUNTER_STRIKE': {'max': 5,'min':5},
     'LOL': {'max':5, 'min':5},
-    'VALORANT': {'max': 4, 'min': 4}
+    'VALORANT': {'max': 5, 'min': 5}
 }
 
 MAXIMUM_RESERVISTS = 2

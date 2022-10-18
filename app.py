@@ -9,13 +9,13 @@ from routes.registration import registrationRoutes
 from routes.contestants import contestantsRoutes
 app = Flask(__name__)
 
-if __name__ == "__main__":   
-    api = Api(app)
+# if __name__ == "__main__":   
+api = Api(app)
 
-    register_routes(api, schoolsRoutes, '/schools')
-    register_routes(api, registrationRoutes, '/registration')
-    register_routes(api, contestantsRoutes, '/contestants')
-    app.run(port=8000)
+register_routes(api, schoolsRoutes, '/schools')
+register_routes(api, registrationRoutes, '/registration')
+register_routes(api, contestantsRoutes, '/contestants')
+#app.run(port=5000)
 
 
     
