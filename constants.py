@@ -6,7 +6,7 @@ CS_RANKS = ["NO_RANK", "SILVER_1", "SILVER_2", 'SILVER_3', 'SILVER_4', 'SILVER_E
 'SUPREME_MASTER_FIRST_CLASS',
 'GLOBAL_ELITE']
 FACEIT_LEVELS = [
-    'NO_LEVEL', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
 ]
 ROLES = ['MEMBER', 'CAPTAIN', 'RESERVIST']
 
