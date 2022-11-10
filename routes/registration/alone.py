@@ -13,7 +13,7 @@ from utils.are_regs_closed import are_regs_closed
 class AloneRegistration(Resource):
     def post(self):
         if are_regs_closed():
-            return "Registrace je již uzavřena", 400
+            return "Registrace je jiz uzavrena", 400
 
         data = request.get_json()
         schema = AloneRegistrationValidation()
