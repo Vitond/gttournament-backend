@@ -7,8 +7,13 @@ from models.contestant import ContestantModel
 from models.registration import RegistrationModel
 from constants import MAXIMUM_RESERVISTS, CONTESTANT_COUNTS
 
+from utils.are_regs_closed import are_regs_closed
+
 class TeamRegistration(Resource):
     def post(self):
+        if are_regs_closed():
+            return "Registrace je již uzavřena", 400
+
         data = request.get_json()
         schema = TeamRegistrationValidation()
 
